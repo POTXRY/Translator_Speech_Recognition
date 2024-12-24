@@ -1,2 +1,3 @@
 bfg.jar
 ..bfg-report/
+ai_asr/models/whisper-medium/model.safetensors
