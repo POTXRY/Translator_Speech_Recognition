@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AHN Whisper</title>
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+            crossorigin="anonymous"></script>
+</head>
+<body>
+
+<!-- 네비게이션 바 -->
+<header class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm sticky-top">
+    <div class="container-xxl bd-gutter flex-wrap flex-lg-nowrap">
+        <a class="navbar-brand d-flex align-items-center" href="{{ url_for('main.index') }}">
+            <img src="/static/imgs/rounded-in-photoretrica.svg" alt="안단테" width="40" height="32" class="d-inline-block align-text-top me-2">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('ASR_Translation.index') }}">ASR 번역</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('File_Translation.index') }}">파일 번역</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('File_Transcription.index') }}">파일 전사</a>
+                </li>
+            </ul>
+            <div class="d-flex gap-2">
+              <div class="dropdown">
+                  <button class="btn btn-light dropdown-toggle" id="loginDropdown" data-bs-toggle="dropdown" aria-expanded="true">
+                      <img src="/static/imgs/person-fill.svg" width="16" height="16">
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="loginDropdown">
+                      {% if session.get('user_id') %}
+                          <li><a class="dropdown-item" href="{{ url_for('profile.profile') }}">프로필</a></li>
+                          {% if session.get('is_admin') %} <!-- 관리자 확인 -->
+                              <li><a class="dropdown-item" href="{{ url_for('admin.manage_users') }}">회원 관리</a></li>
+                          {% endif %}
+                          <li><a class="dropdown-item" href="javascript:void(0);" onclick="logout()">로그아웃</a></li>
+                      {% else %}
+                          <li><a class="dropdown-item" href="{{ url_for('login.index') }}">로그인</a></li>
+                          <li><a class="dropdown-item" href="{{ url_for('signup.index') }}">회원가입</a></li>
+                      {% endif %}
+                  </ul>
+              </div>
+          </div>
+          
+        </div>
+    </div>
+</header>
+
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <div class="alert alert-info" role="alert">
+        {% for message in messages %}
+          {{ message }}
+        {% endfor %}
+      </div>
+    {% endif %}
+{% endwith %}
+
+
+
+<!-- 콘텐츠 영역 -->
+<div class="container mt-4">
+    {% block content %}
+    {% endblock %}
+</div>
+
+<!-- 푸터 -->
+<footer class="bd-footer py-5 mt-5">
+  <div class="container text text-md-start">
+    <div class="row">
+      <!-- 왼쪽 텍스트 영역 -->
+      <div class="col-lg-6 mb-4">
+        <ul class="list-unstyled">
+          <li class="mb-2"><strong>안단테</strong>가 디자인하고 빌드되었습니다.</li>
+          <li class="mb-2">이 번역기는 <a href="https://openai.com/index/whisper/">OPENAI사의 Whisper</a> 기반으로 만들어졌습니다.</li>
+          <li>현재 v1.0.0입니다.</li>
+        </ul>
+      </div>
+      <!-- 중앙 링크 영역 -->
+      <div class="col-6 col-lg-2 offset-lg-2 mb-3">
+        <h5>링크</h5>
+        <ul class="list-unstyled">
+          <li><a href="/">홈</a></li>
+          <li><a href="https://openai.com/">OpenAI</a></li>
+          <li><a href="https://huggingface.co/">Hugging Face</a></li>
+          <li><a href="https://getbootstrap.kr/">Bootstrap</a></li>
+        </ul>
+      </div>
+      <!-- 오른쪽 가이드 영역 -->
+      <div class="col-6 col-lg-2 mb-3">
+        <h5>가이드</h5>
+        <ul class="list-unstyled">
+          <li><a href="#">시작하기</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+
+<!-- Bootstrap 및 jQuery 스크립트 -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+eI7GDI6JKxG+n3G06fAdSafp8y3P"
+        crossorigin="anonymous"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+<script src="/static/js/darkmode.js"></script>
+<script src="/static/js/login.js"></script>
+</body>
+
+</html>

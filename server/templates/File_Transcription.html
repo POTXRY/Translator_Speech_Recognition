@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="/static/js/File_Transcription.js"></script>
+
+<div class="container">
+    <div class="text-center mb-4">
+        <h3>안녕하세요 ^^, {{ username }}님의 텍스트 변환 서비스입니다.</h3>
+        <p class="text-muted">텍스트로 변환할 파일을 선택해주세요...</p>
+    </div>
+
+    <div class="d-flex justify-content-center mb-3">
+        <a href="#" class="btn btn-outline-primary btn-sm" id="new-task-btn" hidden>
+            새로운 파일 처리
+        </a>
+    </div>
+
+    <!-- 파일 첨부 영역 -->
+    <div class="card p-4 mb-4" id="attach_area">
+        <form method="post" enctype="multipart/form-data" id="form">
+            {{ form.csrf_token }}
+            <div class="form-group">
+                <label for="formfile" class="font-weight-bold">분석할 파일을 선택해 주세요.</label>
+                <input class="form-control" type="file" id="formfile" onchange="addfile(this);" multiple>
+            </div>
+
+            <!-- 첨부된 파일 목록 표시 -->
+            <div class="my-3" id="attached-file-list" hidden>
+                <h6>첨부된 파일 목록</h6>
+                <div class="file-list border p-2 rounded"></div>
+            </div>
+
+            <div class="d-flex justify-content-between mt-3">
+                <a href="#" class="btn btn-outline-primary btn-sm" id="submit_files">서버 전송</a>
+                <a href="#" class="btn btn-outline-secondary btn-sm" id="clear-content-btn">화면 초기화</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- 업로드 진행 표시 영역 -->
+    <div class="container text-center my-4" id="p_bar_area_upload" hidden>
+        <p class="text-primary">파일을 업로드합니다. 잠시만 기다려주세요...</p>
+        <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+    <!-- 서버 처리 진행 표시 영역 -->
+    <div class="container text-center my-4" id="p_bar_area_upload1" hidden>
+        <p class="text-danger">업로드 완료! 서버 처리 중입니다. 잠시만 기다려주세요...</p>
+        <div class="spinner-border text-danger" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+    <!-- 서버 처리 결과 표시 영역 -->
+    <div class="card mt-4 p-4" id="result_text_area" hidden>
+        <h6 class="text-success mb-3">서버 처리 결과</h6>
+        <div class="form-floating">
+            <textarea class="form-control" placeholder="나중에 필요하면 여기에 기록" style="height: 300px;" id="floatingTextarea2"></textarea>
+            <label for="floatingTextarea2" id="textarea_label">딥러닝 작업이 끝나면 여기에 작업이 출력됩니다.</label>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

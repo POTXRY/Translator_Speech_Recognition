@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h3>회원 관리</h3>
+    <table class="table table-bordered mt-3">
+        <thead>
+            <tr>
+                <th>사용자명</th>
+                <th>이메일</th>
+                <th>역할</th>
+                <th>업로드 파일 수</th>
+                <th>관리</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for data in user_data %}
+            <tr>
+                <td>{{ data.user.username }}</td>
+                <td>{{ data.user.email }}</td>
+                <td>{{ '관리자' if data.user.is_admin else '일반 사용자' }}</td>
+                <td>{{ data.file_count }}</td>
+                <td>
+                    {% if not data.user.is_admin %}
+                    <form action="{{ url_for('admin.make_admin', user_id=data.user.id) }}" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-success btn-sm">관리자로 지정</button>
+                    </form>
+                    <form action="{{ url_for('admin.delete_user', user_id=data.user.id) }}" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-danger btn-sm">삭제</button>
+                    </form>
+                    {% else %}
+                    <span class="text-muted">관리자 계정</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

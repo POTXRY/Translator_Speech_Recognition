@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<script src="/static/js/login.js"></script>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h2 class="card-title text-center text-primary mb-4">Login</h2>
+                    
+                    <div class="mb-3">
+                        <input type="text" id="login-username" class="form-control" placeholder="Username">
+                    </div>
+                    <div class="mb-4">
+                        <input type="password" id="login-password" class="form-control" placeholder="Password">
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <button onclick="login()" class="btn btn-primary">Login</button>
+                        <a href="/signup" class="btn btn-success">Sign Up</a>  <!-- Sign Up 링크 추가 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

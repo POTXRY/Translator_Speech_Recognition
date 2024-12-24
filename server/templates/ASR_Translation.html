@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="/static/js/ASR_Translation.js"></script>
+
+
+<div class="container">
+    <div class="text-center mb-4">
+        <h3>안녕하세요 ^^... {{ username }}님의 음성인식 번역 서비스입니다.</h3>
+        <p class="text-muted">음성을 인식하고 번역해 드립니다.</p>
+    </div>
+    
+
+    <div class="d-flex justify-content-center mb-3">
+        <button class="btn btn-success mr-2" onclick="startRecognition()" id="startButton">
+            음성 인식 시작
+        </button>
+        <button class="btn btn-danger" id="stopButton" onclick="stopRecognition()" disabled>
+            음성 인식 멈춤
+        </button>
+    </div>
+
+    <div class="form-group mb-4">
+        <label for="recognizedText" class="font-weight-bold">음성 인식 결과</label>
+        <textarea class="form-control" id="recognizedText" rows="3" placeholder="여기에 음성 인식 결과가 나타납니다..."></textarea>
+    </div>
+
+    <div class="container text-center my-4" id="p_bar_area_upload" hidden>
+        <p class="text-primary" id="processingMessage">번역 중입니다. 잠시만 기다려주세요...</p>
+        <div class="spinner-border text-primary" role="status" id="spinner">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="translatedText" class="font-weight-bold">번역 결과</label>
+        <textarea class="form-control" id="translatedText" rows="3" placeholder="번역된 결과가 여기에 나타납니다..."></textarea>
+    </div>
+</div>
+
+{% endblock %}
